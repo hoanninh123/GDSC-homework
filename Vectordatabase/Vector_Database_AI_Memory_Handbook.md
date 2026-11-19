@@ -3,7 +3,7 @@
 ### Vector là gì? Vector được sử dụng như thế nào trong AI/ML?
 - Vector là gì:
   - Về mặt toán học, Vector là một mảng số thực có thứ tự trong không gian nhiều chiều: $\mathbf{v} = [v_1, v_2, \dots, v_d] \in \mathbb{R}^d$, trong đó $d$ là số chiều (dimensions).
-  - Trong AI hiện đại, vector thường có từ vài trăm đến hàng nghìn chiều (ví dụ: OpenAI `text-embedding-3-small` là 1536 chiều).
+  - Trong AI hiện đại, vector thường có từ vài trăm đến hàng nghìn chiều 
 - Cách sử dụng trong AI/ML:
   - Biểu diễn đặc trưng (Feature Representation): Chuyển đổi mọi loại dữ liệu thô (chữ viết, điểm ảnh, sóng âm) thành vector để mạng nơ-ron có thể hiểu và tính toán.
   - Lưu trữ tri thức: Toàn bộ trọng số (weights) và trạng thái ẩn (hidden states) của các mô hình AI/LLM đều là vector và ma trận.
