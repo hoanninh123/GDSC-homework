@@ -44,7 +44,7 @@ Quá trình một đoạn văn bản chuyển thành vector diễn ra qua 4 bư�
    Mỗi Token ID được tra cứu qua bảng Embedding Lookup để lấy ra vector ban đầu, sau đó cộng thêm Vector vị trí (Positional Encoding) để mô hình biết thứ tự xuất hiện của từ trong câu.
 
 3. **Chuyển dịch ngữ cảnh qua Transformer Layers (Self-Attention):**
-   Mạng Transformer sử dụng cơ chế Multi-Head Attention để cho phép mỗi từ "giao tiếp" và hấp thu ngữ cảnh từ tất cả các từ xung quanh. Từ `"ngân hàng"` trong `"ngân hàng thương mại"` sẽ có biểu diễn khác hoàn toàn với `"ngân hàng"` trong `"ngồi bên bờ sông nhìn sang ngân hàng phía bên kia"`.
+   Mạng Transformer sử dụng cơ chế Multi-Head Attention để cho phép mỗi từ "giao tiếp" và hấp thu ngữ cảnh từ tất cả các từ xung quanh. 
 
 4. **Pooling (Trộn thành một Vector duy nhất):**
    Sau khi đi qua các tầng Transformer, mô hình cho ra một ma trận các vector ứng với từng token. Để đại diện cho cả câu/đoạn văn, cơ chế Pooling được áp dụng:
@@ -57,12 +57,26 @@ Quá trình một đoạn văn bản chuyển thành vector diễn ra qua 4 bư�
 ## 1.3 Vector Database là gì? Khác biệt với Database truyền thống
 
 ### Vector Database là gì?
-**Vector Database** là một hệ quản trị cơ sở dữ liệu được thiết kế chuyên biệt để:
-- Lưu trữ hàng triệu đến hàng tỷ vector nhiều chiều đi kèm với metadata.
-- Tối ưu hóa việc  indexing các vector trong không gian nhiều chiều.
-- Thực hiện các truy vấn similarity search với độ trễ thấp 
+**Vector Database** là cơ sở dữ liệu chuyên dụng để lưu trữ, lập chỉ mục (indexing) và tìm kiếm các vector embedding (mảng số nhiều chiều biểu diễn ý nghĩa hoặc đặc trưng của văn bản, hình ảnh, âm thanh) theo độ tương đồng.
+
+#### Cách hoạt động cốt lõi:
+- **Biểu diễn ngữ nghĩa:** Mô hình AI (Embedding Model) chuyển đổi dữ liệu thô (văn bản, ảnh, âm thanh) thành các vector trong không gian nhiều chiều.
+- **Khoảng cách tương đồng:** Dữ liệu có ý nghĩa hoặc đặc điểm càng giống nhau thì khoảng cách giữa chúng càng gần nhau trong không gian vector (tính toán thông qua Cosine Similarity, Euclidean Distance, Dot Product,...).
+- **Tìm kiếm xấp xỉ nhanh (ANN):** Sử dụng các thuật toán Approximate Nearest Neighbor (như HNSW, IVF, PQ,...) để tìm kiếm nhanh các vector gần nhất trên tập dữ liệu quy mô hàng triệu đến hàng tỷ vector mà không cần quét toàn bộ dữ liệu (brute-force).
 
 Một số Vector Database tiêu biểu: **Pinecone, Milvus, Qdrant, Weaviate, Chroma**, và các extension tích hợp cho CSDL truyền thống như **pgvector (PostgreSQL)**.
+
+---
+
+### Khác biệt giữa Vector Database và Database truyền thống (SQL / NoSQL)
+
+| Tiêu chí | Vector Database | Database truyền thống (SQL / NoSQL) |
+| :--- | :--- | :--- |
+| **Dữ liệu chính** | Vector đa chiều (kèm metadata) | Bảng (hàng, cột), tài liệu JSON, cặp khóa - giá trị |
+| **Cách truy vấn** | Tìm kiếm tương đồng / ngữ nghĩa (Similarity Search) | Khớp chính xác (Exact Match), điều kiện lọc logic, phép nối (JOIN) |
+| **Loại dữ liệu mạnh nhất** | Dữ liệu phi cấu trúc (văn bản, hình ảnh, âm thanh, video) | Dữ liệu có cấu trúc hoặc bán cấu trúc rõ ràng |
+| **Cơ chế lập chỉ mục (Indexing)** | Các giải thuật ANN (HNSW, IVF, PQ, ScaNN) | B-Tree, Hash Index, Inverted Index |
+| **Ứng dụng điển hình** | Tìm kiếm ngữ nghĩa, RAG cho LLM, gợi ý sản phẩm, nhận diện hình ảnh | Giao dịch tài chính (ACID), quản lý đơn hàng, hồ sơ người dùng, ERP/CRM |
 
 ---
 
