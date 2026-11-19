@@ -86,13 +86,20 @@
 - HNSW (Hierarchical Navigable Small World):
   - Xây dựng mạng lưới đồ thị nhiều tầng (tương tự cấu trúc Skip-List).
   - Bắt đầu từ tầng cao nhất (thưa nhất) để nhảy những bước xa đến gần vùng đích, sau đó tụt dần xuống tầng dưới (dày đặc hơn) để dò tìm láng giềng gần nhất.
+
+![Nguyên lý hoạt động HNSW](images/hnsw_diagram.jpg)
+
 - IVF (Inverted File Index):
   - Dùng thuật toán $K$-Means chia không gian vector thành $k$ cụm (Voronoi cells).
   - Khi tìm kiếm, chỉ xác định vài tâm cụm ($Centroids$) gần truy vấn nhất (qua tham số `nprobe`), rồi chỉ quét các vector bên trong các cụm đó.
+
+![Phân cụm Voronoi trong IVF Indexing](images/ivf_diagram.jpg)
 - PQ (Product Quantization):
   - Kỹ thuật nén vector bằng cách chia vector $d$ chiều thành $m$ phần nhỏ (sub-vectors).
   - Áp dụng phân cụm để ánh xạ từng phần nhỏ về một giá trị mã centroid (Codebook).
   - Giúp giảm dung lượng bộ nhớ từ 4x đến 16x và tăng tốc độ tính khoảng cách bằng bảng tra cứu.
+
+![Nguyên lý nén vector trong Product Quantization](images/pq_diagram.jpg)
 
 ---
 
